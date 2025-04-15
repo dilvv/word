@@ -91,7 +91,6 @@
     rateValue.textContent = speechRate.toFixed(1);
   };
 
-  // 你提供的单词及翻译
   const wordsWithTranslations = [
     { word: "analysis", translation: "分析 n" },
     { word: "analyze", translation: "分析 v" },
@@ -132,15 +131,18 @@
     { word: "within", translation: "内部" }
   ];
 
-  // 播放发音
   function speak(text) {
+    if (speechSynthesis.speaking) {
+      speechSynthesis.cancel();
+    }
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'en-US';
     utterance.rate = speechRate;
-    speechSynthesis.speak(utterance);
+    setTimeout(() => {
+      speechSynthesis.speak(utterance);
+    }, 100); // 防止被拦截
   }
 
-  // 生成卡片
   wordsWithTranslations.forEach(({ word, translation }) => {
     const card = document.createElement("div");
     card.className = "card";
@@ -157,7 +159,6 @@
     card.appendChild(translationEl);
     wordList.appendChild(card);
 
-    // 语音 & 显示翻译
     card.addEventListener("click", () => {
       speak(word);
       translationEl.style.display = "block";
