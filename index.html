@@ -161,7 +161,10 @@
 
     card.addEventListener("click", () => {
       speak(word);
-      translationEl.style.display = "block";
+      // 确保显示翻译
+      setTimeout(() => {
+        translationEl.style.display = "block";
+      }, 200);  // 延时显示，确保语音播放不被阻塞
     });
   });
 </script>
