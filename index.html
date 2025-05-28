@@ -92,43 +92,82 @@
   };
 
   const wordsWithTranslations = [
-    { word: "analysis", translation: "分析 n" },
-    { word: "analyze", translation: "分析 v" },
-    { word: "sample", translation: "样本 采样" },
-    { word: "measure", translation: "测量 v" },
-    { word: "measurement", translation: "测量 n" },
-    { word: "branching", translation: "分支 n 岔开 v" },
-    { word: "fraction", translation: "比例 n" },
-    { word: "meson", translation: "介子" },
-    { word: "baryon", translation: "重子" },
-    { word: "simulated", translation: "模拟的 n" },
-    { word: "signal", translation: "信号" },
-    { word: "production", translation: "生产 产生" },
-    { word: "resonance", translation: "共振" },
-    { word: "provide", translation: "提供" },
-    { word: "method", translation: "方法" },
-    { word: "decay", translation: "衰变" },
-    { word: "event", translation: "事件" },
-    { word: "verify", translation: "核实 证实" },
-    { word: "selection", translation: "选择" },
-    { word: "compare", translation: "比较" },
-    { word: "rate", translation: "速率" },
-    { word: "continuum", translation: "连续体" },
-    { word: "process", translation: "过程" },
-    { word: "introduce", translation: "引言 介绍" },
-    { word: "dataset", translation: "数据集" },
-    { word: "estimate", translation: "估计" },
-    { word: "systematic", translation: "系统" },
-    { word: "error", translation: "错误 误差" },
-    { word: "summary", translation: "总结" },
-    { word: "reference", translation: "参考" },
-    { word: "experiment", translation: "实验" },
-    { word: "progress", translation: "进展" },
-    { word: "criteria", translation: "条件 标准" },
-    { word: "candidate", translation: "候选人" },
-    { word: "particle", translation: "粒子" },
-    { word: "restricted", translation: "受限的" },
-    { word: "within", translation: "内部" }
+    { word: "Machine", translation: "机器" },
+    { word: "aspect", translation: "方面" },
+    { word: "society", translation: "社会" },
+    { word: "searche", translation: "搜寻" },
+    { word: "content", translation: "内容" },
+    { word: "filtering", translation: "过滤" },
+    { word: "networks", translation: "网络" },
+    { word: "recommendations", translation: "建议" },
+    { word: "e-commerce", translation: "电子商务" },
+    { word: "increasingly", translation: "越来越多" },
+    { word: "present", translation: "目前" },
+    { word: "consumer", translation: "顾客" },
+    { word: "products", translation: "产品" },
+    { word: "cameras", translation: "摄像机" },
+    { word: "systems", translation: "系统" },
+    { word: "identify", translation: "识别" },
+    { word: "image", translation: "图像" },
+    { word: "transcribe", translation: "抄录" },
+    { word: "text", translation: "文本" },
+    { word: "relevant", translation: "相关的" },
+    { word: "applications", translation: "程序" },
+    { word: "techniques", translation: "技术" },
+    { word: "Conventional", translation: "传统的" },
+    { word: "raw", translation: "原始的" },
+    { word: "constructing", translation: "构建" },
+    { word: "pattern", translation: "模式" },
+    { word: "recognition", translation: "识别" },
+    { word: "engineering", translation: "设计 工程学" },
+    { word: "considerable", translation: "丰富的" },
+    { word: "domain", translation: "领域" },
+    { word: "expertise", translation: "专业知识" },
+    { word: "feature", translation: "特征" },
+    { word: "extractor", translation: "提取器" },
+    { word: "pixel", translation: "像素" },
+    { word: "internal", translation: "内部的" },
+    { word: "vector", translation: "向量" },
+    { word: "classifier", translation: "分类" },
+    { word: "detect", translation: "检测" },
+    { word: "classify", translation: "分类" },
+    { word: "advances", translation: "进展" },
+    { word: "solving", translation: "解决" },
+    { word: "resisted", translation: "抵制" },
+    { word: "attempts", translation: "尝试" },
+    { word: "artificial", translation: "人工的" },
+    { word: "intelligence", translation: "智能" },
+    { word: "community", translation: "社群 社区" },
+    { word: "intricate", translation: "错综复杂的" },
+    { word: "structures", translation: "结构" },
+    { word: "dimensional", translation: "维度 尺度" },
+    { word: "applicable", translation: "适用" },
+    { word: "beating", translation: "打破" },
+    { word: "record", translation: "记录" },
+    { word: "predicting", translation: "预测" },
+    { word: "potential", translation: "潜在的" },
+    { word: "drug", translation: "药品" },
+    { word: "molecules", translation: "分子" },
+    { word: "accelerator", translation: "加速器" },
+    { word: "reconstructing", translation: "重建" },
+    { word: "circuits", translation: "回路" },
+    { word: "mutations", translation: "变异" },
+    { word: "expression", translation: "表达" },
+    { word: "disease", translation: "疾病" },
+    { word: "Perhaps", translation: "也许" },
+    { word: "extremely", translation: "极其 非常" },
+    { word: "promising", translation: "有希望的" },
+    { word: "various", translation: "各种各样" },
+    { word: "tasks", translation: "工作" },
+    { word: "language", translation: "语言" },
+    { word: "natural", translation: "自然的" },
+    { word: "particularly", translation: "尤其" },
+    { word: "classification", translation: "分类" },
+    { word: "sentiment", translation: "情绪" },
+    { word: "answering", translation: "回答" },
+    { word: "translation", translation: "翻译" },
+    { word: "algorithm", translation: "算法" },
+    { word: "architecture", translation: "架构" }
   ];
 
   function speak(text) {
@@ -140,7 +179,7 @@
     utterance.rate = speechRate;
     setTimeout(() => {
       speechSynthesis.speak(utterance);
-    }, 100); // 防止被拦截
+    }, 100);
   }
 
   wordsWithTranslations.forEach(({ word, translation }) => {
@@ -161,10 +200,7 @@
 
     card.addEventListener("click", () => {
       speak(word);
-      // 确保显示翻译
-      setTimeout(() => {
-        translationEl.style.display = "block";
-      }, 200);  // 延时显示，确保语音播放不被阻塞
+      translationEl.style.display = "block";
     });
   });
 </script>
