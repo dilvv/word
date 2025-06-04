@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>🎧 单词发音助手</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 40px;
+      background: linear-gradient(to right, #e0f7fa, #f1f8e9);
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    #controls {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    #rate {
+      width: 200px;
+      vertical-align: middle;
+    }
+
+    #word-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+      background-color: #e3f2fd;
+    }
+
+    .word {
+      font-size: 20px;
+      font-weight: 600;
+      color: #00796b;
+    }
+
+    .translation {
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🎧 单词发音助手</h1>
+
+<div id="controls">
+  语速调节：
+  <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1">
+  <span id="rate-value">1.0</span>x
+</div>
+
+<div id="word-list"></div>
+
+<script>
+  const rateSlider = document.getElementById('rate');
+  const rateValue = document.getElementById('rate-value');
+  const wordList = document.getElementById('word-list');
+
+  let speechRate = parseFloat(rateSlider.value);
+  rateSlider.oninput = () => {
+    speechRate = parseFloat(rateSlider.value);
+    rateValue.textContent = speechRate.toFixed(1);
+  };
+
+  const wordsWithTranslations = [
+    { word: "assumption", translation: "假设" },
+    { word: "context", translation: "上下文" },
+    { word: "insight", translation: "洞察力" },
+    { word: "perspective", translation: "观点" },
+    { word: "relevance", translation: "相关性" },
+    { word: "comprise", translation: "包含" },
+    { word: "define", translation: "定义" },
+    { word: "interpretation", translation: "解释" },
+    { word: "precisely", translation: "精确地" },
+    { word: "strategy", translation: "策略" },
+    { word: "concept", translation: "概念" },
+    { word: "dominance", translation: "支配" },
+    { word: "methodology", translation: "方法论" },
+    { word: "promote", translation: "促进" },
+    { word: "ultimate", translation: "最终的" },
+    { word: "constituent", translation: "成分" },
+    { word: "outcome", translation: "结果" },
+    { word: "reinforce", translation: "加强" },
+    { word: "vision", translation: "远见" },
+    { word: "emphasis", translation: "强调" },
+    { word: "acknowledge", translation: "承认" },
+    { word: "crucial", translation: "关键的" },
+    { word: "evidence", translation: "证据" },
+    { word: "significant", translation: "显著的" },
+    { word: "attribute", translation: "属性" },
+    { word: "facilitate", translation: "促进" },
+    { word: "phenomenon", translation: "现象" },
+    { word: "significantly", translation: "显著地" },
+    { word: "category", translation: "类别" },
+    { word: "distinction", translation: "区别" },
+    { word: "identity", translation: "身份" },
+    { word: "potentially", translation: "潜在地" },
+    { word: "technological", translation: "技术的" },
+    { word: "community", translation: "社区" },
+    { word: "diverse", translation: "多样的" },
+    { word: "maintain", translation: "维持" },
+    { word: "respond", translation: "回应" },
+    { word: "undeniable", translation: "不可否认的" },
+    { word: "achieve", translation: "实现" },
+    { word: "benefit", translation: "好处" },
+    { word: "expertise", translation: "专业知识" },
+    { word: "inherently", translation: "本质上" },
+    { word: "reliable", translation: "可靠的" },
+    { word: "statistical", translation: "统计的" },
+    { word: "overall", translation: "总体的" },
+    { word: "furthermore", translation: "此外" },
+    { word: "capability", translation: "能力" },
+    { word: "appreciate", translation: "感激" },
+    { word: "approach", translation: "方法" },
+    { word: "available", translation: "可获得的" },
+    { word: "enable", translation: "使能够" },
+    { word: "considerable", translation: "相当大的" },
+    { word: "generate", translation: "产生" },
+    { word: "potential", translation: "潜力" },
+    { word: "unparalleled", translation: "无与伦比的" },
+    { word: "whereas", translation: "然而" },
+    { word: "predictable", translation: "可预测的" },
+    { word: "highlight", translation: "强调" },
+    { word: "academic", translation: "学术的" },
+    { word: "consequence", translation: "后果" },
+    { word: "optimal", translation: "最优的" },
+    { word: "survey", translation: "调查" },
+    { word: "theory", translation: "理论" },
+    { word: "coordinate", translation: "协调" },
+    { word: "circumstance", translation: "情况" },
+    { word: "component", translation: "组成部分" },
+    { word: "diversity", translation: "多样性" },
+    { word: "integrate", translation: "整合" },
+    { word: "revolutionize", translation: "彻底改革" },
+    { word: "undermine", translation: "削弱" },
+    { word: "confirm", translation: "确认" },
+    { word: "endeavour", translation: "努力" },
+    { word: "integrity", translation: "正直" },
+    { word: "visual", translation: "视觉的" },
+    { word: "analysis", translation: "分析" },
+    { word: "controversial", translation: "有争议的" },
+    { word: "domain", translation: "领域" },
+    { word: "mechanism", translation: "机制" },
+    { word: "specifically", translation: "具体地" },
+    { word: "availability", translation: "可用性" },
+    { word: "controversy", translation: "争议" },
+    { word: "emergence", translation: "出现" },
+    { word: "paradigm", translation: "范式" },
+    { word: "ultimately", translation: "最终地" },
+    { word: "conventional", translation: "传统的" },
+    { word: "infrastructure", translation: "基础设施" },
+    { word: "reveal", translation: "揭示" },
+    { word: "uniquely", translation: "独特地" },
+    { word: "dimensional", translation: "维度的" },
+    { word: "variability", translation: "可变性" },
+    { word: "design", translation: "设计" },
+    { word: "evolution", translation: "演变" },
+    { word: "functional", translation: "功能的" },
+    { word: "framework", translation: "框架" },
+    { word: "flexibility", translation: "灵活性" },
+    { word: "intrinsic", translation: "内在的" },
+    { word: "motivation", translation: "动机" },
+    { word: "percentage", translation: "百分比" },
+    { word: "partnership", translation: "合作关系" },
+    { word: "principle", translation: "原则" },
+    { word: "primarily", translation: "主要地" },
+    { word: "implementation", translation: "实施" }
+  ];
+
+  function speak(text) {
+    if (speechSynthesis.speaking) {
+      speechSynthesis.cancel();
+    }
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    utterance.rate = speechRate;
+    setTimeout(() => {
+      speechSynthesis.speak(utterance);
+    }, 100);
+  }
+
+  wordsWithTranslations.forEach(({ word, translation }) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const wordEl = document.createElement("div");
+    wordEl.className = "word";
+    wordEl.textContent = word;
+
+    const translationEl = document.createElement("div");
+    translationEl.className = "translation";
+    translationEl.textContent = translation;
+
+    card.appendChild(wordEl);
+    card.appendChild(translationEl);
+    wordList.appendChild(card);
+
+    card.addEventListener("click", () => {
+      speak(word);
+      translationEl.style.display = "block";
+    });
+  });
+</script>
+
+</body>
+</html>
